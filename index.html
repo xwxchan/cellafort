@@ -41,8 +41,8 @@
         <div class="frame" id="frame">
           <canvas id="unity-canvas" tabindex="-1" width="1280" height="720"></canvas>
           <div class="gate" id="gate">
-            <button class="draw" id="start" type="button" disabled>곧 열립니다</button>
-            <p class="gate-note" id="gate-note">웹 버전을 준비하고 있어요. 조금만 기다려 주세요.</p>
+            <button class="draw" id="start" type="button">게임 시작</button>
+            <p class="gate-note" id="gate-note">처음 한 번은 약 20 MB를 내려받습니다. 키보드나 게임패드가 필요해요.</p>
             <div class="ink" id="ink" hidden>
               <div class="ink-track"><div class="ink-fill" id="ink-fill"></div></div>
               <p class="ink-text" id="ink-text">검을 벼리는 중… 0%</p>
@@ -138,17 +138,14 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/missing.js";
+      var loaderUrl = buildUrl + "/SHROUD_site.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/missing.js",
-        frameworkUrl: buildUrl + "/missing.js",
-        workerUrl: buildUrl + "/missing.js",
-        codeUrl: buildUrl + "/missing.js",
-        memoryUrl: buildUrl + "/missing.js",
-        symbolsUrl: buildUrl + "/missing.js",
+        dataUrl: buildUrl + "/SHROUD_site.data.unityweb",
+        frameworkUrl: buildUrl + "/SHROUD_site.framework.js.unityweb",
+        codeUrl: buildUrl + "/SHROUD_site.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "Cellafort",
+        companyName: "DefaultCompany",
         productName: "SHROUD",
         productVersion: "0.9.4",
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 1.5),
@@ -186,7 +183,7 @@
         document.body.appendChild(script);
       }
 
-      /* placeholder: no build yet */
+      startBtn.addEventListener("click", start);
       fsBtn.addEventListener("click", function () { if (instance) instance.SetFullscreen(1); });
       canvas.addEventListener("pointerdown", function () { canvas.focus(); });
     })();
