@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SHROUD: 무협 검객 대전</title>
+  <meta name="description" content="여섯 문파의 검객이 겨루는 종이 컷아웃 무협 대전 게임. 브라우저에서 바로 하고, 방 코드로 친구와 온라인 대전.">
+  <meta property="og:title" content="SHROUD: 무협 검객 대전">
+  <meta property="og:description" content="브라우저에서 바로, 방 코드 하나로 친구와 온라인 대전.">
+  <meta name="theme-color" content="#161c3a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="TemplateData/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="mark" href="#">SHROUD</a>
+    <nav aria-label="페이지 안내">
+      <a href="#controls">조작법</a>
+      <a href="#versus">친구와 대전</a>
+      <a href="#swordsmen">검객</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="stage" aria-labelledby="title">
+      <div class="moon" aria-hidden="true"></div>
+      <h1 id="title">검객 대전</h1>
+      <p class="lede">여섯 문파의 검객이 종이 인형처럼 겨루는 2D 무협 대전. 설치 없이 여기서 바로 하고, 방 코드 하나로 친구와 붙습니다.</p>
+
+      <div class="frame-wrap">
+        <div class="frame" id="frame">
+          <canvas id="unity-canvas" tabindex="-1" width="1280" height="720"></canvas>
+          <div class="gate" id="gate">
+            <button class="draw" id="start" type="button" disabled>곧 열립니다</button>
+            <p class="gate-note" id="gate-note">웹 버전을 준비하고 있어요. 조금만 기다려 주세요.</p>
+            <div class="ink" id="ink" hidden>
+              <div class="ink-track"><div class="ink-fill" id="ink-fill"></div></div>
+              <p class="ink-text" id="ink-text">검을 벼리는 중… 0%</p>
+            </div>
+          </div>
+          <div class="notice" id="notice" role="status" aria-live="polite"></div>
+        </div>
+        <svg class="ridge" viewBox="0 0 1200 170" preserveAspectRatio="none" aria-hidden="true">
+          <path class="r3" d="M0 92 L70 60 L120 78 L190 30 L250 66 L330 44 L400 82 L470 38 L540 70 L610 22 L690 64 L760 46 L840 84 L910 34 L990 72 L1060 50 L1130 80 L1200 56 L1200 170 L0 170 Z"/>
+          <path class="r2" d="M0 120 L90 96 L150 112 L240 78 L320 108 L410 90 L480 118 L560 84 L650 112 L730 96 L820 122 L900 88 L980 114 L1070 92 L1140 116 L1200 100 L1200 170 L0 170 Z"/>
+          <path class="r1" d="M0 146 L60 132 L140 144 L230 124 L310 142 L400 130 L500 148 L590 128 L690 146 L780 134 L870 150 L960 130 L1050 146 L1130 134 L1200 144 L1200 170 L0 170 Z"/>
+        </svg>
+      </div>
+
+      <div class="bar">
+        <button class="ghost" id="fullscreen" type="button" disabled>전체 화면</button>
+        <span class="bar-note">게임 메뉴는 방향키로 고르고 Enter로 정합니다. 뒤로 가기는 Esc.</span>
+      </div>
+    </section>
+
+    <section class="block" id="controls" aria-labelledby="controls-h">
+      <h2 id="controls-h">조작법</h2>
+      <table class="keys">
+        <thead>
+          <tr><th scope="col">동작</th><th scope="col">키보드 (1P)</th><th scope="col">게임패드</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">이동, 점프, 앉기</th><td><kbd>A</kbd><kbd>D</kbd> <kbd>W</kbd> <kbd>S</kbd></td><td>스틱 또는 십자키</td></tr>
+          <tr><th scope="row">약공격</th><td><kbd>J</kbd></td><td>A</td></tr>
+          <tr><th scope="row">강공격 (꾹 누르면 검도)</th><td><kbd>K</kbd></td><td>X</td></tr>
+          <tr><th scope="row">절초</th><td><kbd>L</kbd></td><td>Y</td></tr>
+          <tr><th scope="row">비기</th><td><kbd>U</kbd></td><td>B</td></tr>
+          <tr><th scope="row">오의 (게이지 100%)</th><td><kbd>I</kbd></td><td>RB</td></tr>
+          <tr><th scope="row">대시</th><td><kbd>Shift</kbd> 또는 앞 두 번</td><td>LB</td></tr>
+          <tr><th scope="row">막기</th><td><kbd>Space</kbd></td><td>LT</td></tr>
+          <tr><th scope="row">잡기</th><td><kbd>J</kbd> + <kbd>K</kbd></td><td>A + X</td></tr>
+        </tbody>
+      </table>
+      <p class="aside">공중에서 점프를 두 번 더 쓸 수 있고, 강공격을 꾹 누르면 상단세로 기를 모았다가 떼는 방향으로 일격을 날립니다. 전체 기술표는 게임 중 <kbd>Esc</kbd>.</p>
+    </section>
+
+    <section class="block" id="versus" aria-labelledby="versus-h">
+      <h2 id="versus-h">친구와 대전하기</h2>
+      <ol class="steps">
+        <li><strong>ONLINE</strong>을 고르고 검객을 정합니다.</li>
+        <li>한 사람이 <strong>CREATE ROOM</strong>을 누르면 화면에 방 코드가 뜹니다.</li>
+        <li>그 코드를 메신저로 친구에게 보냅니다.</li>
+        <li>친구는 <strong>JOIN WITH CODE</strong>에 코드를 넣고 Enter. 바로 대전이 시작됩니다.</li>
+      </ol>
+      <p class="aside">아는 사람이 없으면 <strong>QUICK MATCH</strong>로 기다리는 아무 상대와 붙을 수 있어요. 이 사이트와 PC판끼리도 대전됩니다.</p>
+    </section>
+
+    <section class="block" id="swordsmen" aria-labelledby="swordsmen-h">
+      <h2 id="swordsmen-h">검객</h2>
+      <ul class="talismans">
+        <li style="--sect:#dbe5f5"><span class="name">무명검객</span><span class="sect">낭인</span><span class="trait">중도를 쓰는 균형형. 발을 구를 때마다 충격파가 인다.</span></li>
+        <li style="--sect:#ff5c99"><span class="name">매화검객</span><span class="sect">화산파</span><span class="trait">연속 공격형. 세 번째 칼부터 매화 꽃잎이 터진다.</span></li>
+        <li style="--sect:#5cc6ff"><span class="name">태극검객</span><span class="sect">무당파</span><span class="trait">반격형. 막는 순간 흘려 내고 되받아친다.</span></li>
+        <li style="--sect:#ffc23b"><span class="name">제왕검객</span><span class="sect">남궁세가</span><span class="trait">파괴형. 막혀도 검압으로 밀어낸다.</span></li>
+        <li style="--sect:#40e3b5"><span class="name">환영검객</span><span class="sect">종남파</span><span class="trait">속도형. 지나간 자리에 환영이 남아 다시 찌른다.</span></li>
+        <li style="--sect:#ff3b2f"><span class="name">혈영검객</span><span class="sect">마교</span><span class="trait">폭주형. 체력이 바닥날수록 빨라진다.</span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>SHROUD v0.9.4</p>
+    <p>인물과 초식은 무협 문파 설정에서 영감만 받은 창작입니다.</p>
+    <p>글꼴: Song Myung, Pretendard (SIL Open Font License)</p>
+  </footer>
+
+  <script>
+    (function () {
+      var canvas = document.getElementById("unity-canvas");
+      var gate = document.getElementById("gate");
+      var startBtn = document.getElementById("start");
+      var gateNote = document.getElementById("gate-note");
+      var ink = document.getElementById("ink");
+      var inkFill = document.getElementById("ink-fill");
+      var inkText = document.getElementById("ink-text");
+      var notice = document.getElementById("notice");
+      var fsBtn = document.getElementById("fullscreen");
+      var instance = null;
+
+      if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(pointer: fine)").matches) {
+        gateNote.textContent = "이 게임은 키보드나 게임패드로 합니다. PC에서 열어 주세요.";
+      }
+
+      function showNotice(msg, type) {
+        notice.textContent = msg;
+        notice.className = "notice show " + (type === "error" ? "error" : "warn");
+        if (type !== "error") setTimeout(function () { notice.className = "notice"; }, 6000);
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/missing.js";
+      var config = {
+        arguments: [],
+        dataUrl: buildUrl + "/missing.js",
+        frameworkUrl: buildUrl + "/missing.js",
+        workerUrl: buildUrl + "/missing.js",
+        codeUrl: buildUrl + "/missing.js",
+        memoryUrl: buildUrl + "/missing.js",
+        symbolsUrl: buildUrl + "/missing.js",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Cellafort",
+        productName: "SHROUD",
+        productVersion: "0.9.4",
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 1.5),
+        showBanner: function (msg, type) { showNotice(msg, type); },
+      };
+
+      function start() {
+        startBtn.disabled = true;
+        startBtn.hidden = true;
+        gateNote.hidden = true;
+        ink.hidden = false;
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = function () {
+          createUnityInstance(canvas, config, function (p) {
+            var pct = Math.round(p * 100);
+            inkFill.style.transform = "scaleX(" + p + ")";
+            inkText.textContent = (pct < 90 ? "검을 벼리는 중… " : "종이 인형을 오리는 중… ") + pct + "%";
+          }).then(function (u) {
+            instance = u;
+            gate.classList.add("gone");
+            fsBtn.disabled = false;
+            canvas.focus();
+          }).catch(function (err) {
+            showNotice("게임을 불러오지 못했습니다: " + err, "error");
+            ink.hidden = true;
+            startBtn.hidden = false;
+            startBtn.disabled = false;
+            startBtn.textContent = "다시 시도";
+          });
+        };
+        script.onerror = function () {
+          showNotice("게임 파일을 찾을 수 없습니다. Build 폴더가 함께 올라갔는지 확인하세요.", "error");
+        };
+        document.body.appendChild(script);
+      }
+
+      /* placeholder: no build yet */
+      fsBtn.addEventListener("click", function () { if (instance) instance.SetFullscreen(1); });
+      canvas.addEventListener("pointerdown", function () { canvas.focus(); });
+    })();
+  </script>
+</body>
+</html>
