@@ -1,3 +1,4 @@
 # Unity 패키지·백업 파일은 사이트에 올리지 않음
 *.unitypackage
 *.zip
+*.bat
