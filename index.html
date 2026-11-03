@@ -34,16 +34,13 @@
   <main>
     <section class="stage" aria-labelledby="title">
       <div class="moon" aria-hidden="true"></div>
-      <h1 id="title">검객 대전</h1>
-      <p class="lede">여섯 문파의 검객이 종이 인형처럼 겨루는 2D 무협 대전. 설치 없이 여기서 바로 하고, 방 코드 하나로 친구와 붙습니다.</p>
-
       <div class="frame-wrap">
         <div class="frame" id="frame">
           <canvas id="unity-canvas" tabindex="-1" width="1280" height="720"></canvas>
           <div class="gate" id="gate">
-            <button class="draw" id="start" type="button">게임 시작</button>
+            <button class="draw" id="start" type="button" hidden>다시 시도</button>
             <p class="gate-note" id="gate-note">처음 한 번은 약 20 MB를 내려받습니다. 키보드나 게임패드가 필요해요.</p>
-            <div class="ink" id="ink" hidden>
+            <div class="ink" id="ink">
               <div class="ink-track"><div class="ink-fill" id="ink-fill"></div></div>
               <p class="ink-text" id="ink-text">검을 벼리는 중… 0%</p>
             </div>
@@ -59,8 +56,10 @@
 
       <div class="bar">
         <button class="ghost" id="fullscreen" type="button" disabled>전체 화면</button>
-        <span class="bar-note">게임 메뉴는 방향키로 고르고 Enter로 정합니다. 뒤로 가기는 Esc.</span>
+        <span class="bar-note">메뉴는 방향키로 고르고 Enter로 정합니다. 뒤로 가기는 Esc. 처음이라면 TUTORIAL부터.</span>
       </div>
+      <h1 id="title">검객 대전</h1>
+      <p class="lede">여섯 문파의 검객이 종이 인형처럼 겨루는 2D 무협 대전. 설치 없이 여기서 바로 하고, 방 코드 하나로 친구와 붙고, 대전 중에 채팅도 합니다.</p>
     </section>
 
     <section class="block" id="controls" aria-labelledby="controls-h">
@@ -109,7 +108,7 @@
   </main>
 
   <footer class="foot">
-    <p>SHROUD v0.9.4</p>
+    <p>SHROUD v0.9.5</p>
     <p>인물과 초식은 무협 문파 설정에서 영감만 받은 창작입니다.</p>
     <p>글꼴: Song Myung, Pretendard (SIL Open Font License)</p>
   </footer>
@@ -147,7 +146,7 @@
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "SHROUD",
-        productVersion: "0.9.4",
+        productVersion: "0.9.5",
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 1.5),
         showBanner: function (msg, type) { showNotice(msg, type); },
       };
@@ -155,7 +154,6 @@
       function start() {
         startBtn.disabled = true;
         startBtn.hidden = true;
-        gateNote.hidden = true;
         ink.hidden = false;
         var script = document.createElement("script");
         script.src = loaderUrl;
@@ -174,7 +172,6 @@
             ink.hidden = true;
             startBtn.hidden = false;
             startBtn.disabled = false;
-            startBtn.textContent = "다시 시도";
           });
         };
         script.onerror = function () {
@@ -184,6 +181,8 @@
       }
 
       startBtn.addEventListener("click", start);
+      // open straight into the game: load as soon as the page is ready
+      start();
       fsBtn.addEventListener("click", function () { if (instance) instance.SetFullscreen(1); });
       canvas.addEventListener("pointerdown", function () { canvas.focus(); });
     })();

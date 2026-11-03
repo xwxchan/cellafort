@@ -59,7 +59,7 @@ a { color: inherit; }
 }
 .moon {
   position: absolute;
-  top: -1.5rem;
+  top: calc(100vh - 2rem);
   right: clamp(1rem, 8vw, 7rem);
   width: clamp(6rem, 14vw, 11rem);
   aspect-ratio: 1;
@@ -71,7 +71,7 @@ a { color: inherit; }
 }
 h1 {
   position: relative;
-  margin: 0;
+  margin: clamp(3rem, 7vw, 5rem) 0 0;
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(3.4rem, 10vw, 7.5rem);
@@ -81,7 +81,7 @@ h1 {
 .lede {
   position: relative;
   max-width: var(--measure);
-  margin: 1rem 0 2.25rem;
+  margin: 1rem 0 0;
   color: var(--paper-dim);
 }
 
@@ -89,7 +89,9 @@ h1 {
 .frame {
   position: relative;
   aspect-ratio: 16 / 9;
-  width: 100%;
+  /* the game fills the first screen: as wide as fits under the header */
+  width: min(100%, calc((100vh - 9.5rem) * 16 / 9));
+  margin: 0 auto;
   background: #090c1e;
   border: 10px solid var(--paper);
   /* deckled paper edge: a slightly uneven outline instead of a clean rectangle */
