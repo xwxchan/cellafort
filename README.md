@@ -7,3 +7,5 @@
 - 게임 소스는 Unity 프로젝트(cellafort)에 있습니다.
 
 GitHub Pages 설정: 저장소 Settings → Pages → Source "Deploy from a branch" → Branch `main`, 폴더 `/ (root)` → Save.
+
+사이트 버전: v0.9.10 (2026-11-06)
