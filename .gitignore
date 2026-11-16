@@ -2,3 +2,7 @@
 *.unitypackage
 *.zip
 *.bat
+
+# 사이트와 무관한 개인 자료 (OVERDRIVE 프로젝트, SHROUD 기획 문서, 학교 자료) — 절대 올리지 않음
+_로컬자료/
+OVERDRIVE*/
