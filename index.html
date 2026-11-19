@@ -108,7 +108,7 @@
   </main>
 
   <footer class="foot">
-    <p>SHROUD v0.9.11</p>
+    <p>SHROUD v0.9.12</p>
     <p>인물과 초식은 무협 문파 설정에서 영감만 받은 창작입니다.</p>
     <p>글꼴: Song Myung, Pretendard (SIL Open Font License)</p>
   </footer>
@@ -137,16 +137,20 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/SHROUD_site.loader.js";
+      // v1.0: every build gets its own tag (ShroudWebBuild replaces it) so a browser never mixes a cached old
+      // game code (.wasm) with the new data (.data) right after an update — that mix crashes at load
+      var buildTag = "?v=0.9.12-202611190858";
+      var loaderUrl = buildUrl + "/SHROUD_site.loader.js" + buildTag;
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/SHROUD_site.data.unityweb",
-        frameworkUrl: buildUrl + "/SHROUD_site.framework.js.unityweb",
-        codeUrl: buildUrl + "/SHROUD_site.wasm.unityweb",
+        dataUrl: buildUrl + "/SHROUD_site.data.unityweb" + buildTag,
+        frameworkUrl: buildUrl + "/SHROUD_site.framework.js.unityweb" + buildTag,
+        codeUrl: buildUrl + "/SHROUD_site.wasm.unityweb" + buildTag,
+        symbolsUrl: buildUrl + "/SHROUD_site.symbols.json.unityweb" + buildTag,
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "SHROUD",
-        productVersion: "0.9.11",
+        productVersion: "0.9.12",
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
         showBanner: function (msg, type) { showNotice(msg, type); },
       };
